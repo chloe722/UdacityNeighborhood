@@ -25,7 +25,11 @@ context(class {
         })
     }
     createBundle(fuse) {
-        const app = fuse.bundle("app");
+        const app = fuse.bundle("app").shim({
+            PropTypes:{
+                source:"node_modules/prop-types/index.js"
+            }
+        });
         if (!this.isProduction) {
             app.watch()
             app.hmr()
