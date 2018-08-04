@@ -30,7 +30,7 @@ context(class {
             app.watch()
             app.hmr()
         }
-        app.instructions(">index.jsx");
+        app.instructions(">index.tsx");
         return app;
     }
 });
