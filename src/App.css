@@ -9,12 +9,9 @@ html, body, #root {
     position: relative;
 }
 
-.App-logo {
-
-}
 
 .App-header {
-    background-color: #222;
+    background-color: #2a2b2d;
     padding: 20px;
     color: white;
     height: 20px;
@@ -39,7 +36,7 @@ html, body, #root {
 
 .App-menu{
     position: absolute;
-    background-color: blueviolet;
+    background-color: #252831;
     width: 300px;
     height:100%;
     top:0;
@@ -51,11 +48,31 @@ html, body, #root {
     left:0px;
 }
 
-.App-map{
+.App-map {
     background-color: gold;
     width: 100%;
     height:100%;
     text-align: center;
+}
+
+.App-menu-items {
+    color: #ddd;
+    font-size: 120%;
+    list-style: none;
+    padding: 10px;
+}
+
+.App-title-search {
+    color: #252831;
+}
+
+.App-search-container{
+    /* display: inline; */
+   align-content: center;
+    background-color: dimgray;
+}
+h1{
+    color: #fcfcfc;
 }
 
 @keyframes App-logo-spin {

@@ -10,33 +10,41 @@ interface State {
 }
 
 class App extends Component<{}, State> {
-    state = {
-        menuOpened : false
+    state = window['AppState'] || {
+        menuOpened: false
     }
 
     toggleMenu = () => this.setState(state => ({
         menuOpened: !state.menuOpened
     }))
 
-
     render() {
-        const {menuOpened}= this.state
+        const { menuOpened } = this.state
+
+
+        // allow to preserve state after hot reload
+        window['AppState'] = this.state
+
         return (
             <div className={"App" + (menuOpened ? ' menuOpened' : '')}>
                 <div className="App-menu">
+                    <h1>Neighborhood</h1>
+                    <div className="App-search-container">
+                        <input type="text" />
+                        <button className="App-title-search"> Search </button></div>
                     <ul>
-                        <li>one</li>
-                        <li>two</li>
-                        <li>three</li>
-                        <li>one</li>
-                        <li>two</li>
-                        <li>three</li>
+                        <li className="App-menu-items">one</li>
+                        <li className="App-menu-items">two</li>
+                        <li className="App-menu-items">three</li>
+                        <li className="App-menu-items">one</li>
+                        <li className="App-menu-items">two</li>
+                        <li className="App-menu-items">three</li>
                     </ul>
                 </div>
                 <div className="App-body">
                     <div className="App-header">
-                       <a onClick={this.toggleMenu}>
-                            <FontAwesomeIcon icon={faBars}/>
+                        <a onClick={this.toggleMenu}>
+                            <FontAwesomeIcon icon={faBars} />
                         </a>
                     </div>
 
