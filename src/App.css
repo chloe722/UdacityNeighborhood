@@ -1,21 +1,61 @@
+html, body, #root {
+    height:100%;
+    padding:0;
+    margin:0;
+}
+
 .App {
-    text-align: center;
+    height: 100%;
+    position: relative;
 }
 
 .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-    height: 80px;
+
 }
 
 .App-header {
     background-color: #222;
-    height: 150px;
     padding: 20px;
     color: white;
+    height: 20px;
+
 }
 
 .App-intro {
     font-size: large;
+}
+
+.App-body{
+    display: flex;
+    flex-direction: column;
+    background-color: coral;
+    height: 100%;
+    transition: margin-left 300ms;
+}
+
+.App.menuOpened .App-body {
+    margin-left:300px;
+}
+
+.App-menu{
+    position: absolute;
+    background-color: blueviolet;
+    width: 300px;
+    height:100%;
+    top:0;
+    left:-300px;
+    transition: left 300ms;
+}
+
+.App.menuOpened .App-menu {
+    left:0px;
+}
+
+.App-map{
+    background-color: gold;
+    width: 100%;
+    height:100%;
+    text-align: center;
 }
 
 @keyframes App-logo-spin {

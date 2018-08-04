@@ -3,22 +3,47 @@ import { Component } from 'react';
 import './App.css';
 import * as logo from './logo.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-class App extends Component {
+interface State {
+    menuOpened: boolean
+}
+
+class App extends Component<{}, State> {
+    state = {
+        menuOpened : false
+    }
+
+    toggleMenu = () => this.setState(state => ({
+        menuOpened: !state.menuOpened
+    }))
+
+
     render() {
+        const {menuOpened}= this.state
         return (
-            <div className="App">
-                <div className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <h2>Welcome to React!</h2>
-                    <FontAwesomeIcon icon={faCoffee} />
+            <div className={"App" + (menuOpened ? ' menuOpened' : '')}>
+                <div className="App-menu">
+                    <ul>
+                        <li>one</li>
+                        <li>two</li>
+                        <li>three</li>
+                        <li>one</li>
+                        <li>two</li>
+                        <li>three</li>
+                    </ul>
                 </div>
-                <p className="App-intro">
-                    To get started, edit
-                    <code>src/App.js</code>
-                    and save to reload.
-                </p>
+                <div className="App-body">
+                    <div className="App-header">
+                       <a onClick={this.toggleMenu}>
+                            <FontAwesomeIcon icon={faBars}/>
+                        </a>
+                    </div>
+
+                    <div className="App-map">
+                        map here
+                    </div>
+                </div>
             </div>
         );
     }
