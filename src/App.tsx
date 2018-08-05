@@ -4,6 +4,7 @@ import './App.css';
 import * as logo from './logo.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import AppMenu from './menu/AppMenu';
 
 interface State {
     menuOpened: boolean
@@ -27,23 +28,12 @@ class App extends Component<{}, State> {
 
         return (
             <div className={"App" + (menuOpened ? ' menuOpened' : '')}>
-                <div className="App-menu">
-                    <h1>Neighborhood</h1>
-                    <div className="App-search-container">
-                        <input type="text" />
-                        <button className="App-title-search"> Search </button></div>
-                    <ul>
-                        <li className="App-menu-items">one</li>
-                        <li className="App-menu-items">two</li>
-                        <li className="App-menu-items">three</li>
-                        <li className="App-menu-items">one</li>
-                        <li className="App-menu-items">two</li>
-                        <li className="App-menu-items">three</li>
-                    </ul>
-                </div>
+
+                <AppMenu />
+
                 <div className="App-body">
                     <div className="App-header">
-                        <a onClick={this.toggleMenu}>
+                        <a className="App-menu-btn" onClick={this.toggleMenu}>
                             <FontAwesomeIcon icon={faBars} />
                         </a>
                     </div>
