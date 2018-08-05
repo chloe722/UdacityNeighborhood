@@ -39,28 +39,6 @@ html, body, #root {
     margin-left:300px;
 }
 
-.App-menu{
-    position: absolute;
-    background-color: #252831;
-    width: 300px;
-    height: 100%;
-    top:0;
-    left:-300px;
-    transition: left 300ms;
-    overflow: hidden;
-}
-
-
-.App-scrollable-content{
-    overflow-y: scroll;
-    width: 105%;
-    height: 100%;
-    padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
-    box-sizing: content-box; /* So the width will be 100% + 17px */
-    overflow-x: hidden;
-
-}
-
 .App-menu-btn {
     cursor: pointer;
 }
@@ -73,7 +51,6 @@ html, body, #root {
     color: #0277BD;
 }
 
-
 .App-map {
     background-color: gold;
     width: 100%;
@@ -81,69 +58,3 @@ html, body, #root {
     text-align: center;
 }
 
-.App-menu-container{
-    padding: 0px;
-    width: 100%;
-}
-
-.App-menu-items 
-{
-    font-family: 'Poiret One', cursive;
-    font-weight: bold;
-    color: #ddd;
-    font-size: 120%;
-    list-style: none;
-}
-
-.App-menu-items a {
-    color: #616161;
-    display: block;
-    width: 100%;
-    padding: 15px;
-    text-decoration: none;
-}
-
-.App-menu-items a:hover {
-    background-color: #37474F;
-    color: #ddd;
-}
-
-.App-search-container{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    text-align: center;
-}
-
-.App-search-input{
-    align-self: center;
-    padding: 8px;
-    flex-grow: 1;
-    border-radius: 2px;
-    border: none;
-}
-
-.App-search-btn {
-    color: #006064;
-    padding:5px;
-    border-radius: 1px;
-    border: none;
-    cursor: pointer;
-}
-
-
-h1{
-    font-family: 'Poiret One', cursive;
-    letter-spacing: 4px;
-    text-align: center;    
-    color: #fcfcfc;
-}
-
-/* @keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-} */

@@ -1,0 +1,28 @@
+.App-menu {
+    position: absolute;
+    background-color: #252831;
+    width: 300px;
+    height: 100%;
+    top:0;
+    left:-300px;
+    transition: left 300ms;
+    overflow: hidden;
+}
+
+.App-scrollable-content {
+    overflow-y: scroll;
+    width: 105%;
+    height: 100%;
+    padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+    box-sizing: content-box; /* So the width will be 100% + 17px */
+    overflow-x: hidden;
+
+}
+
+
+.App-menu h1 {
+    font-family: 'Poiret One', cursive;
+    letter-spacing: 4px;
+    text-align: center;    
+    color: #fcfcfc;
+}
