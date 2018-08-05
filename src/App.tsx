@@ -38,7 +38,7 @@ class App extends Component<{}, State> {
                         </a>
                     </div>
 
-                    <div className="App-map">
+                    <div className="App-map" id="map">
                         map here
                     </div>
                 </div>
