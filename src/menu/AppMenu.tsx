@@ -33,13 +33,9 @@ class AppMenu extends Component {
             type: 'restaurant'
         };
 
-     
-
         var service = new google.maps.places.PlacesService(map);
         service.nearbySearch(request, (results, status) => {
             this.setState({ items: results })
-
-         
 
             results.map(result => {
                 var marker = new google.maps.Marker({
@@ -47,11 +43,32 @@ class AppMenu extends Component {
                     map: map,
                     title: result.name
                 });
-                
+
                 marker.setMap(map);
+
+                marker.addListener('click', function () {
+                    service.getDetails({
+                        placeId: result.place_id,
+
+                    }, (result, status) => {
+
+                        var locationInfo = `
+                            <strong>${result.name}</strong>
+                            <p>${result.international_phone_number}</p>
+                            <p>${result.adr_address}</p>
+                            `
+                        var infowindow = new google.maps.InfoWindow({
+                            content: locationInfo
+                        });
+
+                        infowindow.open(map, marker);
+
+                    })
+
+                });
             })
 
-       
+
 
             // if (status == google.maps.places.PlacesServiceStatus.OK) {
             //     for (var i = 0; i < results.length; i++) {
