@@ -33,9 +33,26 @@ class AppMenu extends Component {
             type: 'restaurant'
         };
 
+     
+
         var service = new google.maps.places.PlacesService(map);
         service.nearbySearch(request, (results, status) => {
             this.setState({ items: results })
+
+         
+
+            results.map(result => {
+                var marker = new google.maps.Marker({
+                    position: result.geometry.location,
+                    map: map,
+                    title: result.name
+                });
+                
+                marker.setMap(map);
+            })
+
+       
+
             // if (status == google.maps.places.PlacesServiceStatus.OK) {
             //     for (var i = 0; i < results.length; i++) {
             //         var place = results[i];
