@@ -1,8 +1,10 @@
 import * as React from "react";
+import * as ReactDOM from "react-dom";
 import { Component } from 'react';
 import Search from './Search';
 import Items from './Items';
 import './AppMenu.css';
+import InfoWindow from './InfoWindow';
 
 
 const URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&name=harbour&key=AIzaSyA58k3L4icQwP4dF6Od5MrOgk1fXthmbpY"
@@ -52,17 +54,14 @@ class AppMenu extends Component {
 
                     }, (result, status) => {
 
-                        var locationInfo = `
-                            <strong>${result.name}</strong>
-                            <p>${result.international_phone_number}</p>
-                            <p>${result.adr_address}</p>
-                            `
+                        var locationInfo = `<div id="${result.place_id}"></div>`
                         var infowindow = new google.maps.InfoWindow({
                             content: locationInfo
                         });
 
                         infowindow.open(map, marker);
-
+                        let container = document.getElementById(result.place_id)
+                        ReactDOM.render(<InfoWindow place={result} />, container)
                     })
 
                 });
