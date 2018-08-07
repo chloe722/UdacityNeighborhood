@@ -19,6 +19,7 @@
     text-decoration: none;
 }
 
+.App-menu-items.selected a,
 .App-menu-items a:hover {
     background-color: #37474F;
     color: #ddd;

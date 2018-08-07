@@ -56,7 +56,11 @@ class App extends Component<{}, State> {
         return (
             <div className={"App" + (menuOpened ? ' menuOpened' : '')}>
 
-                <AppMenu places={this.state.places} />
+                <AppMenu
+                    places={this.state.places}
+                    selectPlace={this.selectPlace}
+                    selectedPlace={this.state.selectedPlace}
+                />
 
                 <div className="App-body">
                     <div className="App-header">
