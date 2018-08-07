@@ -35,6 +35,11 @@ class AppMenu extends Component {
             type: 'restaurant'
         };
 
+        var locationInfo = `<div id="infoWindow"></div>`
+        var infowindow = new google.maps.InfoWindow({
+            content: locationInfo
+        });
+
         var service = new google.maps.places.PlacesService(map);
         service.nearbySearch(request, (results, status) => {
             this.setState({ items: results })
@@ -54,13 +59,8 @@ class AppMenu extends Component {
 
                     }, (result, status) => {
 
-                        var locationInfo = `<div id="${result.place_id}"></div>`
-                        var infowindow = new google.maps.InfoWindow({
-                            content: locationInfo
-                        });
-
                         infowindow.open(map, marker);
-                        let container = document.getElementById(result.place_id)
+                        let container = document.getElementById('infoWindow')
                         ReactDOM.render(<InfoWindow place={result} />, container)
                     })
 
