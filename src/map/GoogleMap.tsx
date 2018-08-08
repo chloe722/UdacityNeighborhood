@@ -8,6 +8,7 @@ interface Props {
     selectedPlace?: google.maps.places.PlaceResult
     center: google.maps.LatLng
     serviceRef(service: google.maps.places.PlacesService): void
+    mapRef(map: google.maps.Map): void
     selectPlace(place: google.maps.places.PlaceResult): void
 }
 
@@ -24,6 +25,7 @@ class GoogleMap extends Component<Props> {
         });
         this.service = new google.maps.places.PlacesService(this.map);
         this.props.serviceRef(this.service)
+        this.props.mapRef(this.map)
         this.forceUpdate()
     }
 

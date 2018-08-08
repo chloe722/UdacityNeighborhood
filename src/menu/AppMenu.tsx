@@ -9,6 +9,7 @@ interface Props {
     places: google.maps.places.PlaceResult[]
     selectPlace(place: google.maps.places.PlaceResult)
     selectedPlace?: google.maps.places.PlaceResult
+    search(text: string): void
 }
 
 const URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&name=harbour&key=AIzaSyA58k3L4icQwP4dF6Od5MrOgk1fXthmbpY"
@@ -19,7 +20,7 @@ class AppMenu extends Component<Props> {
             <div className="App-menu">
                 <div className="App-scrollable-content">
                     <h1>Neighborhood</h1>
-                    <Search />
+                    <Search search={this.props.search} />
                     <Items
                         places={this.props.places}
                         selectPlace={this.props.selectPlace}

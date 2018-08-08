@@ -11,6 +11,7 @@ interface State {
     places: google.maps.places.PlaceResult[],
     center: google.maps.LatLng,
     selectedPlace?: google.maps.places.PlaceResult
+    searchQuery?: string
 }
 
 class App extends Component<{}, State> {
@@ -20,6 +21,7 @@ class App extends Component<{}, State> {
         center: new google.maps.LatLng(-33.8665433, 151.1956316) // pyrmont
     }
     service: google.maps.places.PlacesService
+    map: google.maps.Map
 
     toggleMenu = () => this.setState(state => ({
         menuOpened: !state.menuOpened
@@ -47,6 +49,18 @@ class App extends Component<{}, State> {
         })
     }
 
+    search = text => {
+        this.setState({ searchQuery: text })
+        this.service.textSearch({
+            bounds: this.map.getBounds(),
+            query: text
+        }, places => {
+            this.setState({
+                places
+            })
+        })
+    }
+
     render() {
         const { menuOpened } = this.state
 
@@ -60,6 +74,7 @@ class App extends Component<{}, State> {
                     places={this.state.places}
                     selectPlace={this.selectPlace}
                     selectedPlace={this.state.selectedPlace}
+                    search={this.search}
                 />
 
                 <div className="App-body">
@@ -73,6 +88,7 @@ class App extends Component<{}, State> {
                         places={this.state.places}
                         center={this.state.center}
                         serviceRef={service => this.service = service}
+                        mapRef={map => this.map = map}
                         selectPlace={this.selectPlace}
                         selectedPlace={this.state.selectedPlace}
                     />
