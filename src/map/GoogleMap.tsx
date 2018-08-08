@@ -19,7 +19,8 @@ class GoogleMap extends Component<Props> {
     componentDidMount() {
         this.map = new google.maps.Map(this.mapContainer, {
             center: this.props.center,
-            zoom: 15
+            zoom: 15,
+            gestureHandling: 'cooperative'
         });
         this.service = new google.maps.places.PlacesService(this.map);
         this.props.serviceRef(this.service)
