@@ -3,12 +3,16 @@ import * as ReactDOM from "react-dom";
 import { Component } from "react";
 import PlaceMarker from './PlaceMarker';
 
+export interface MapReadyOpts {
+    map: google.maps.Map
+    service: google.maps.places.PlacesService
+}
+
 interface Props {
     places: google.maps.places.PlaceResult[]
     selectedPlace?: google.maps.places.PlaceResult
     center: google.maps.LatLng
-    serviceRef(service: google.maps.places.PlacesService): void
-    mapRef(map: google.maps.Map): void
+    onReady(opts: MapReadyOpts)
     selectPlace(place: google.maps.places.PlaceResult): void
 }
 
@@ -24,13 +28,15 @@ class GoogleMap extends Component<Props> {
             gestureHandling: 'cooperative'
         });
         this.service = new google.maps.places.PlacesService(this.map);
-        this.props.serviceRef(this.service)
-        this.props.mapRef(this.map)
+        this.props.onReady({ map: this.map, service: this.service })
         this.forceUpdate()
     }
 
     render() {
         let { selectedPlace, places, selectPlace } = this.props
+        if (this.map && selectedPlace) {
+            this.map.panTo(selectedPlace.geometry.location)
+        }
         return <>
             <div className="App-map" id="map" ref={e => this.mapContainer = e}></div>
             {this.map && places.map(place =>

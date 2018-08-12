@@ -4,7 +4,9 @@ import './App.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import AppMenu from './menu/AppMenu';
-import GoogleMap from './map/GoogleMap';
+import GoogleMap, { MapReadyOpts } from './map/GoogleMap';
+import Place from './place/Place';
+import { setServers } from 'dns';
 
 interface State {
     menuOpened: boolean,
@@ -12,6 +14,8 @@ interface State {
     center: google.maps.LatLng,
     selectedPlace?: google.maps.places.PlaceResult
     searchQuery?: string
+    service?: google.maps.places.PlacesService
+    map?: google.maps.Map
 }
 
 class App extends Component<{}, State> {
@@ -20,25 +24,18 @@ class App extends Component<{}, State> {
         places: [],
         center: new google.maps.LatLng(-33.8665433, 151.1956316) // pyrmont
     }
-    service: google.maps.places.PlacesService
-    map: google.maps.Map
 
     toggleMenu = () => this.setState(state => ({
         menuOpened: !state.menuOpened
     }))
 
-    componentDidMount() {
-        this.fetchItems()
-    }
-
-    fetchItems() {
+    fetchItems(service: google.maps.places.PlacesService) {
         var request = {
             location: this.state.center,
             radius: 500,
             type: 'restaurant'
         };
-
-        this.service.nearbySearch(request, (places, status) => {
+        service.nearbySearch(request, (places, status) => {
             this.setState({ places })
         });
     }
@@ -51,8 +48,9 @@ class App extends Component<{}, State> {
 
     search = text => {
         this.setState({ searchQuery: text })
-        this.service.textSearch({
-            bounds: this.map.getBounds(),
+        let { map, service } = this.state;
+        this.state.service.textSearch({
+            bounds: map.getBounds(),
             query: text
         }, places => {
             this.setState({
@@ -61,11 +59,18 @@ class App extends Component<{}, State> {
         })
     }
 
-    render() {
-        const { menuOpened } = this.state
-
+    componentDidUpdate() {
         // allow to preserve state after hot reload
         window['AppState'] = this.state
+    }
+
+    mapReady = ({ map, service }: MapReadyOpts) => {
+        this.setState({ map, service })
+        this.fetchItems(service)
+    }
+
+    render() {
+        const { menuOpened, map, service } = this.state
 
         return (
             <div className={"App" + (menuOpened ? ' menuOpened' : '')}>
@@ -88,11 +93,15 @@ class App extends Component<{}, State> {
                     <GoogleMap
                         places={this.state.places}
                         center={this.state.center}
-                        serviceRef={service => this.service = service}
-                        mapRef={map => this.map = map}
+                        onReady={this.mapReady}
                         selectPlace={this.selectPlace}
                         selectedPlace={this.state.selectedPlace}
                     />
+
+                    {service && this.state.selectedPlace
+                        ? <Place place={this.state.selectedPlace} service={service} />
+                        : null}
+
                     <div className="map-overlay"></div>
                 </div>
             </div>

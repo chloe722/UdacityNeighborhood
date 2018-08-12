@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import InfoWindow from './InfoWindow';
 
 interface Props {
     map: google.maps.Map
@@ -25,25 +24,16 @@ export default class PlaceMarker extends React.PureComponent<Props> {
         this.marker.setMap(null)
     }
 
-    getInfoWindow(): google.maps.InfoWindow {
-        if (!this.infoWindow) {
-            this.infoWindow = new google.maps.InfoWindow({
-                content: document.createElement('div')
-            })
-        }
-        return this.infoWindow!
-    }
-
     render() {
         let { map, place, selected, service } = this.props
         if (selected) {
-            return <InfoWindow
-                service={service}
-                place={place}
-                map={map}
-                marker={this.marker} />
+            this.marker.setIcon(
+                'http://maps.google.com/mapfiles/ms/icons/green-dot.png')
         } else {
-            return null
+            this.marker.setIcon(
+                'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+            )
         }
+        return null;
     }
 }
