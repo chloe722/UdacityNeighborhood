@@ -38,7 +38,8 @@ class GoogleMap extends Component<Props> {
             this.map.panTo(selectedPlace.geometry.location)
         }
         return <>
-            <div className="App-map" id="map" ref={e => this.mapContainer = e}></div>
+            <div className="App-map" id="map" aria-label="location" role="application"
+                ref={e => this.mapContainer = e}></div>
             {this.map && places.map(place =>
                 <PlaceMarker
                     key={place.place_id}

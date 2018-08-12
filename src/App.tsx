@@ -85,7 +85,7 @@ class App extends Component<{}, State> {
 
                 <div className="App-body">
                     <div className="App-header">
-                        <a className="App-menu-btn" onClick={this.toggleMenu}>
+                        <a className="App-menu-btn" aria-label="Open search menu button" role="button" onClick={this.toggleMenu}>
                             <FontAwesomeIcon icon={faBars} />
                         </a>
                     </div>

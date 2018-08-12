@@ -40,13 +40,21 @@ class Place extends React.PureComponent<Props, State> {
         let { place } = this.props
         let { details } = this.state
         return <div className="place">
-            <strong>{place.name}</strong>
-            {details ?
-                <>
-                    <p>{details.international_phone_number}</p>
-                    <p dangerouslySetInnerHTML={{ __html: details.adr_address }}></p>
-                </>
-                : null}
+            <div className="place-content">
+                <h1>{place.name}</h1>
+                {details ?
+                    <>
+                        <p>
+                            <a href={"call://" + details.international_phone_number}
+                                role="link"
+                                aria-label="phone number"
+                            >{details.international_phone_number}</a>
+                        </p>
+
+                        <p dangerouslySetInnerHTML={{ __html: details.adr_address }} aria-label="address"></p>
+                    </>
+                    : null}
+            </div>
         </div>
     }
 }

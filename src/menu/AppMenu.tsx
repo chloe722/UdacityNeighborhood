@@ -23,7 +23,7 @@ class AppMenu extends Component<Props> {
             <div className="App-menu">
                 <div className="App-scrollable-content">
                     <h1>Neighborhood
-                         <a className="App-menu-close-btn" onClick={this.props.toggleMenu}>
+                         <a className="App-menu-close-btn" aria-label="Close button" role="button" onClick={this.props.toggleMenu}>
                             <FontAwesomeIcon icon={faWindowClose} className="App-menu-close-icn" />
                         </a>
                     </h1>

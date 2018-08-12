@@ -30,7 +30,7 @@ html, body, #root {
 .App-body{
     display: flex;
     flex-direction: column;
-    background-color: coral;
+    background-color: #fafafa;
     height: 100%;
     transition: margin-left 300ms;
 }

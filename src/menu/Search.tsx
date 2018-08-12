@@ -28,10 +28,14 @@ class Search extends Component<Props> {
                     type="text"
                     maxLength={30}
                     onKeyDown={this.keydown}
+                    aria-label="Enter search text"
+                    role="text"
                 />
                 <button
                     onClick={this.submit}
-                    className="App-search-btn">Search</button>
+                    className="App-search-btn"
+                    aria-label="Search button"
+                    role="button">Search</button>
             </div>
         )
     }

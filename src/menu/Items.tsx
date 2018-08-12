@@ -20,11 +20,11 @@ class Items extends Component<Props> {
     render() {
         let { places, selectPlace } = this.props
         return (
-            <ul className="App-menu-items-container">
+            <ul className="App-menu-items-container" aria-label="List of searched results" role="listitem">
                 {places.map(place =>
                     <li key={place.id}
                         className={this.itemClassName(place)}>
-                        <a href="#" onClick={() => selectPlace(place)}>
+                        <a href="#" aria-label={place.name} role="option" onClick={() => selectPlace(place)}>
                             {place.name}
                         </a>
                     </li>
