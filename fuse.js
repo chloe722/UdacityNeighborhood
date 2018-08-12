@@ -7,27 +7,39 @@ context(class {
         return FuseBox.init({
             homeDir: "src",
             output: "dist/$name.js",
-            target : "browser@es5",
+            target: "browser@es5",
             hash: this.isProduction,
-            useTypescriptCompiler : true,
+            useTypescriptCompiler: true,
             plugins: [
                 CSSPlugin(),
                 SVGPlugin(),
                 WebIndexPlugin({
-                    template : "src/index.html"
+                    template: "src/index.html"
                 }),
                 this.isProduction && QuantumPlugin({
                     bakeApiIntoBundle: "app",
-                    uglify: true,
-                    css : true
+                    uglify: false,
+                    css: true
                 })
             ]
         })
     }
+    bundleWorker() {
+        const fuse = FuseBox.init({
+            homeDir: "src",
+            output: "dist/$name.js",
+            target: "browser@es5",
+            hash: false,
+            useTypescriptCompiler: true
+        })
+        const worker = fuse.bundle("worker")
+        worker.instructions(">worker.ts")
+        return fuse
+    }
     createBundle(fuse) {
         const app = fuse.bundle("app").shim({
-            PropTypes:{
-                source:"node_modules/prop-types/index.js"
+            PropTypes: {
+                source: "node_modules/prop-types/index.js"
             }
         });
         if (!this.isProduction) {
@@ -35,11 +47,12 @@ context(class {
             app.hmr()
         }
         app.instructions(">index.tsx");
+
         return app;
     }
 });
 
-task("clean", () => src("dist").clean("dist").exec() )
+task("clean", () => src("dist").clean("dist").exec())
 
 task("default", ["clean"], async context => {
     const fuse = context.getConfig();
@@ -48,10 +61,14 @@ task("default", ["clean"], async context => {
     await fuse.run();
 });
 
-task("dist", ["clean"], async context => {
+task("dist", ["clean", "worker"], async context => {
     context.isProduction = true;
     const fuse = context.getConfig();
-    fuse.dev(); // remove it later
     context.createBundle(fuse);
     await fuse.run();
 });
+
+task("worker", ["clean"], async context => {
+    const fuse = context.bundleWorker()
+    await fuse.run()
+})

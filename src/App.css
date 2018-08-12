@@ -58,3 +58,26 @@ html, body, #root {
     text-align: center;
 }
 
+.map-overlay {
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+    .App.menuOpened .App-body {
+        margin-left:0px;
+    }
+
+    .App.menuOpened .map-overlay {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6)
+
+    }
+}
+
+

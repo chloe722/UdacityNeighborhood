@@ -75,6 +75,7 @@ class App extends Component<{}, State> {
                     selectPlace={this.selectPlace}
                     selectedPlace={this.state.selectedPlace}
                     search={this.search}
+                    toggleMenu={this.toggleMenu}
                 />
 
                 <div className="App-body">
@@ -92,6 +93,7 @@ class App extends Component<{}, State> {
                         selectPlace={this.selectPlace}
                         selectedPlace={this.state.selectedPlace}
                     />
+                    <div className="map-overlay"></div>
                 </div>
             </div>
         );

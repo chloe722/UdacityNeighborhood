@@ -16,6 +16,10 @@
         "outDir": "build/",
         "noEmitHelpers": true,
         "preserveConstEnums": true,
-        "suppressImplicitAnyIndexErrors": true
+        "suppressImplicitAnyIndexErrors": true,
+        "lib": [
+            "webworker",
+            "dom"
+        ]
     }
 }
