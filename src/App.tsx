@@ -81,11 +81,12 @@ class App extends Component<{}, State> {
                     selectedPlace={this.state.selectedPlace}
                     search={this.search}
                     toggleMenu={this.toggleMenu}
+                    inactive={!menuOpened}
                 />
 
                 <div className="App-body">
                     <div className="App-header">
-                        <a className="App-menu-btn" aria-label="Open search menu button" role="button" onClick={this.toggleMenu}>
+                        <a className="App-menu-btn" aria-label="Menu button" role="button" tabIndex={0} onClick={this.toggleMenu}>
                             <FontAwesomeIcon icon={faBars} />
                         </a>
                     </div>
