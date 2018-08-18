@@ -10,12 +10,20 @@ import { setServers } from 'dns';
 
 interface State {
     menuOpened: boolean,
-    places: google.maps.places.PlaceResult[],
+    places: IPlace[],
     center: google.maps.LatLng,
-    selectedPlace?: google.maps.places.PlaceResult
+    selectedPlace?: IPlace
     searchQuery?: string
     service?: google.maps.places.PlacesService
     map?: google.maps.Map
+}
+
+export interface IPlace {
+    name: string
+    place_id: string
+    location: string
+    lat: number
+    lng: number
 }
 
 class App extends Component<{}, State> {
@@ -35,12 +43,12 @@ class App extends Component<{}, State> {
             radius: 500,
             type: 'restaurant'
         };
-        service.nearbySearch(request, (places, status) => {
-            this.setState({ places })
-        });
+        // service.nearbySearch(request, (places, status) => {
+        //     this.setState({ places })
+        // });
     }
 
-    selectPlace = (place: google.maps.places.PlaceResult) => {
+    selectPlace = (place: IPlace) => {
         this.setState({
             selectedPlace: place
         })
@@ -49,14 +57,41 @@ class App extends Component<{}, State> {
     search = text => {
         this.setState({ searchQuery: text })
         let { map, service } = this.state;
-        this.state.service.textSearch({
-            bounds: map.getBounds(),
-            query: text
-        }, places => {
-            this.setState({
-                places
+        const CLIENT_SECRET = 'IRTKUMGEH3HPSOUCB5FL0UWIF3WRPMTQ1NAEZ15TCXGVPVST'
+        const CLIENT_ID = '4MVAJJV5DIYKI4CSSIGWIHSV5D4INVN4AQIZOA0W1TDBFFLD'
+        fetch(`https://api.foursquare.com/v2/venues/explore`
+            + `?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`
+            + `&v=20180323&limit=20&ll=-33.8665433,151.1956316&query=${text}`)
+            .then(response => {
+                return response.json();
             })
-        })
+            .then(data => {
+                console.log('response data', data)
+                var places: IPlace[] = []
+
+                for (let group of data.response.groups) {
+                    for (let item of group.items) {
+                        try {
+                            let address = item.venue.location.formattedAddress;
+                            places.push({
+                                place_id: item.venue.id,
+                                name: item.venue.name,
+                                location: address.join(" "),
+                                lat: item.venue.location.lat,
+                                lng: item.venue.location.lng
+                            })
+
+                        } catch (e) {
+                            console.error(e)
+                        }
+                    }
+                }
+
+                this.setState({ places })
+            })
+            .catch(function () {
+                // Code for handling errors
+            });
     }
 
     componentDidUpdate() {

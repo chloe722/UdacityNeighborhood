@@ -1,11 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { IPlace } from '../App';
 
 interface Props {
     map: google.maps.Map
-    place: google.maps.places.PlaceResult
+    // place: google.maps.places.PlaceResult
+    place: IPlace
     selected: boolean
-    onClick(place: google.maps.places.PlaceResult): void
+    // onClick(place: google.maps.places.PlaceResult): void
+    onClick(place: IPlace): void
+
     service: google.maps.places.PlacesService
 }
 
@@ -15,8 +19,9 @@ export default class PlaceMarker extends React.PureComponent<Props> {
 
     componentDidMount() {
         let { map, place, selected } = this.props
+        var latlng = new google.maps.LatLng(place.lat, place.lng);
         this.marker.setMap(map)
-        this.marker.setPosition(place.geometry.location)
+        this.marker.setPosition(latlng)
         this.marker.addListener('click', () => this.props.onClick(place))
     }
 

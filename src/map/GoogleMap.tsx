@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Component } from "react";
 import PlaceMarker from './PlaceMarker';
+import { IPlace } from '../App';
 
 export interface MapReadyOpts {
     map: google.maps.Map
@@ -9,11 +10,14 @@ export interface MapReadyOpts {
 }
 
 interface Props {
-    places: google.maps.places.PlaceResult[]
-    selectedPlace?: google.maps.places.PlaceResult
+    // places: google.maps.places.PlaceResult[]
+    places: IPlace[]
+    selectedPlace?: IPlace
     center: google.maps.LatLng
     onReady(opts: MapReadyOpts)
-    selectPlace(place: google.maps.places.PlaceResult): void
+    // selectPlace(place: google.maps.places.PlaceResult): void
+    selectPlace(place: IPlace): void
+
 }
 
 class GoogleMap extends Component<Props> {
@@ -35,7 +39,8 @@ class GoogleMap extends Component<Props> {
     render() {
         let { selectedPlace, places, selectPlace } = this.props
         if (this.map && selectedPlace) {
-            this.map.panTo(selectedPlace.geometry.location)
+            var latlng = new google.maps.LatLng(selectedPlace.lat, selectedPlace.lng);
+            this.map.panTo(latlng)
         }
         return <>
             <div className="App-map" id="map" aria-label="location" role="application"

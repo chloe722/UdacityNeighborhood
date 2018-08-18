@@ -7,10 +7,10 @@ interface Props {
 }
 
 class Search extends Component<Props> {
-    input: HTMLInputElement
+    input: HTMLInputElement | null = null
 
     submit = () => {
-        this.props.search(this.input.value.trim())
+        this.props.search(this.input!.value.trim())
     }
 
     keydown = (e: React.KeyboardEvent) => {

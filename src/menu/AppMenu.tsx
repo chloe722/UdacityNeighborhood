@@ -6,11 +6,12 @@ import Items from './Items';
 import './AppMenu.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose, faClosedCaptioning, faEraser } from '@fortawesome/free-solid-svg-icons';
+import { IPlace } from '../App';
 
 interface Props {
-    places: google.maps.places.PlaceResult[]
-    selectPlace(place: google.maps.places.PlaceResult)
-    selectedPlace?: google.maps.places.PlaceResult
+    places: IPlace[]
+    selectPlace(place: IPlace): void
+    selectedPlace?: IPlace
     search(text: string): void
     toggleMenu(): void
     inactive?: boolean
