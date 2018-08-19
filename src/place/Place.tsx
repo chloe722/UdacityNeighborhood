@@ -36,8 +36,8 @@ class Place extends React.PureComponent<Props, State> {
         this.setState({
             details: undefined
         })
-        const CLIENT_SECRET = 'AR1RVMLAUJNLUGHIGMHRDIXJ4KSEZBAX4PNMZDKGPWDXZKW0'
-        const CLIENT_ID = '40KZXTTYFHSCO45ARCXD2TG2FXCPLIB2QFAB4GSKQVIMWXSY'
+        const CLIENT_SECRET = '4ZVIPJ4UNXVSQFSVLH1TY2FG1CXCTZFDKBTY2F02VAVUVBG2'
+        const CLIENT_ID = 'P2TM54TS1Q1QRNMRM4A5JAYRP12JFSXR4AVC5VTNM2RMPACO'
 
         fetch(`https://api.foursquare.com/v2/venues/${this.props.place.place_id}`
             + `?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&v=20180818`)
@@ -63,17 +63,17 @@ class Place extends React.PureComponent<Props, State> {
         let { place } = this.props
         let { details } = this.state
         if (!details) {
-            return <div className="place">
-                <div className="place-content">
+            return <div className="place place-loading-container">
+                <div className="place-loading-content place-loading">
                     Loading...
                 </div>
             </div>
         }
         if (details.meta.code >= 400) {
-            return <div className="place">
-                <div className="place-content">
+            return <div className="place place-error-container">
+                <div className="place-error-content place-error">
                     FourSquare API error:
-                    <p>{details.meta.errorDetail}</p>
+                    <p>{details.meta.errorDetail} :(</p>
                 </div>
             </div>
         }
@@ -84,21 +84,20 @@ class Place extends React.PureComponent<Props, State> {
         const imgUrl = bestPhoto
             ? `${bestPhoto.prefix}300x200${bestPhoto.suffix}`
             : undefined
+        const phone = venue.contact ? venue.contact.phone : "Not provided";
 
         return <div className="place">
 
-
             <img className="place-image" src={imgUrl} alt={place.name} />
 
-
             <div className="place-content">
-                <h1 className="place-heading place-info">{place.name}</h1>
+                <h1 className="place-info place-heading">{place.name}</h1>
                 <p className="place-info">
                     <FontAwesomeIcon className="fa-phone" icon={faPhone} />
                     <a href={"call://" + details.response.venue.contact.phone}
                         role="link"
                         aria-label="phone number"
-                    >{details.response.venue.contact.phone}</a>
+                    >{phone}</a>
                 </p>
                 <p aria-label="address" className="place-info place-address">
                     <FontAwesomeIcon className="fa-address" icon={faMapMarkedAlt} />

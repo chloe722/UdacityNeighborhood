@@ -69,6 +69,11 @@ html, body, #root {
         margin-left:0px;
     }
 
+    .App.menuOpened {
+        height: 100%;
+        overflow: hidden;
+    }
+
     .App.menuOpened .map-overlay {
         display: block;
         position: absolute;
