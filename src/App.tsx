@@ -57,8 +57,8 @@ class App extends Component<{}, State> {
     search = text => {
         this.setState({ searchQuery: text })
         let { map, service } = this.state;
-        const CLIENT_SECRET = 'IRTKUMGEH3HPSOUCB5FL0UWIF3WRPMTQ1NAEZ15TCXGVPVST'
-        const CLIENT_ID = '4MVAJJV5DIYKI4CSSIGWIHSV5D4INVN4AQIZOA0W1TDBFFLD'
+        const CLIENT_SECRET = 'AR1RVMLAUJNLUGHIGMHRDIXJ4KSEZBAX4PNMZDKGPWDXZKW0'
+        const CLIENT_ID = '40KZXTTYFHSCO45ARCXD2TG2FXCPLIB2QFAB4GSKQVIMWXSY'
         fetch(`https://api.foursquare.com/v2/venues/explore`
             + `?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`
             + `&v=20180323&limit=20&ll=-33.8665433,151.1956316&query=${text}`)

@@ -1,7 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import './Place.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IPlace } from '../App';
+import { faPhone, faAddressBook, faLocationArrow, faMarker, faMapMarked, faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
     // place: google.maps.places.PlaceResult
@@ -26,7 +28,7 @@ class Place extends React.PureComponent<Props, State> {
         this.fetchDetails()
     }
 
-    fetchDetails() {
+    async fetchDetails() {
         if (this.fetchedPlaceId == this.props.place.place_id) {
             return
         }
@@ -34,8 +36,9 @@ class Place extends React.PureComponent<Props, State> {
         this.setState({
             details: undefined
         })
-        const CLIENT_SECRET = 'IRTKUMGEH3HPSOUCB5FL0UWIF3WRPMTQ1NAEZ15TCXGVPVST'
-        const CLIENT_ID = '4MVAJJV5DIYKI4CSSIGWIHSV5D4INVN4AQIZOA0W1TDBFFLD'
+        const CLIENT_SECRET = 'AR1RVMLAUJNLUGHIGMHRDIXJ4KSEZBAX4PNMZDKGPWDXZKW0'
+        const CLIENT_ID = '40KZXTTYFHSCO45ARCXD2TG2FXCPLIB2QFAB4GSKQVIMWXSY'
+
         fetch(`https://api.foursquare.com/v2/venues/${this.props.place.place_id}`
             + `?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&v=20180818`)
             .then(response => {
@@ -59,31 +62,51 @@ class Place extends React.PureComponent<Props, State> {
     render() {
         let { place } = this.props
         let { details } = this.state
-        return <div className="place">
-            <div className="place-content">
-                <h1>{place.name}</h1>
-                {/* {details ? */}
-                <>
-                    {/* <p>
-                            <a href={"call://" + details.international_phone_number}
-                                role="link"
-                                aria-label="phone number"
-                            >{details.international_phone_number}</a>
-                        </p> */}
-
-                    {/* <p>
-                            <a href={"call://" + 1234567890}
-                                role="link"
-                                aria-label="phone number"
-                            >{}</a>
-                        </p> */}
-
-                    {/* <p dangerouslySetInnerHTML={{ __html: details.adr_address }} aria-label="address"></p> */}
-                    <p aria-label="address">{place.location}</p>
-
-                </>
-                {/* // : null} */}
+        if (!details) {
+            return <div className="place">
+                <div className="place-content">
+                    Loading...
+                </div>
             </div>
+        }
+        if (details.meta.code >= 400) {
+            return <div className="place">
+                <div className="place-content">
+                    FourSquare API error:
+                    <p>{details.meta.errorDetail}</p>
+                </div>
+            </div>
+        }
+
+        const { venue } = details.response
+        const { bestPhoto } = venue
+
+        const imgUrl = bestPhoto
+            ? `${bestPhoto.prefix}300x200${bestPhoto.suffix}`
+            : undefined
+
+        return <div className="place">
+
+
+            <img className="place-image" src={imgUrl} alt={place.name} />
+
+
+            <div className="place-content">
+                <h1 className="place-heading place-info">{place.name}</h1>
+                <p className="place-info">
+                    <FontAwesomeIcon className="fa-phone" icon={faPhone} />
+                    <a href={"call://" + details.response.venue.contact.phone}
+                        role="link"
+                        aria-label="phone number"
+                    >{details.response.venue.contact.phone}</a>
+                </p>
+                <p aria-label="address" className="place-info place-address">
+                    <FontAwesomeIcon className="fa-address" icon={faMapMarkedAlt} />
+                    {place.location}
+                </p>
+
+            </div>
+
         </div>
     }
 }

@@ -1,3 +1,41 @@
-.place-content {
-    min-height: 114px;
+.place {
+    flex: 0 1 auto;
+    /* justify-content: center; */
+    min-height: 200px;
+
+}
+
+.place-heading {
+    color: #322e30;
+}
+
+.place .place-content {
+    /* align-self: auto; */
+}
+
+.place-info {
+    padding-left: 30px;
+}
+
+.place-address {
+    color: #333333;
+}
+
+.place .place-image {
+    float: left;
+    margin-right: 20px;
+}
+
+.fa-phone {
+    color: green;
+    padding-right: 5px;
+}
+
+.fa-address {
+    color: orange;
+    padding-right: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
 }
