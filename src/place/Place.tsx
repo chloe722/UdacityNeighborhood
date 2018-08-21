@@ -36,8 +36,8 @@ class Place extends React.PureComponent<Props, State> {
         this.setState({
             details: undefined
         })
-        const CLIENT_SECRET = '4ZVIPJ4UNXVSQFSVLH1TY2FG1CXCTZFDKBTY2F02VAVUVBG2'
-        const CLIENT_ID = 'P2TM54TS1Q1QRNMRM4A5JAYRP12JFSXR4AVC5VTNM2RMPACO'
+        const CLIENT_SECRET = 'OT4FFXIAHA4PBBPYXLJC4O1WXT0AMPLZSW1OK504Y5PIDCMT'
+        const CLIENT_ID = 'IVKRS4LGN3R5W3UURTT2NKCPW2YLPFP3GINGGZREBFMGRFEG'
 
         fetch(`https://api.foursquare.com/v2/venues/${this.props.place.place_id}`
             + `?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&v=20180818`)

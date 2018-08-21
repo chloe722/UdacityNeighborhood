@@ -3,12 +3,12 @@ const { src, task, watch, context, fuse } = require("fuse-box/sparky");
 
 
 context(class {
-    getConfig() {
-        return FuseBox.init({
+    bundleApp() {
+        const fuse = FuseBox.init({
             homeDir: "src",
             output: "dist/$name.js",
             target: "browser@es5",
-            hash: this.isProduction,
+            hash: false,
             useTypescriptCompiler: true,
             plugins: [
                 CSSPlugin(),
@@ -23,20 +23,6 @@ context(class {
                 })
             ]
         })
-    }
-    bundleWorker() {
-        const fuse = FuseBox.init({
-            homeDir: "src",
-            output: "dist/$name.js",
-            target: "browser@es5",
-            hash: false,
-            useTypescriptCompiler: true
-        })
-        const worker = fuse.bundle("worker")
-        worker.instructions(">worker.ts")
-        return fuse
-    }
-    createBundle(fuse) {
         const app = fuse.bundle("app").shim({
             PropTypes: {
                 source: "node_modules/prop-types/index.js"
@@ -48,27 +34,49 @@ context(class {
         }
         app.instructions(">index.tsx");
 
-        return app;
+        return fuse;
+    }
+    bundleWorker() {
+        const fuse = FuseBox.init({
+            homeDir: "src",
+            output: "dist/$name.js",
+            target: "browser@es5",
+            hash: false,
+            useTypescriptCompiler: true,
+            plugins: [
+                QuantumPlugin({
+                    bakeApiIntoBundle: "sw",
+                    containedAPI: true,
+                    uglify: false,
+                    css: true
+                })
+            ]
+        })
+        const worker = fuse.bundle("sw")
+        if (!this.isProduction) {
+            worker.watch()
+        }
+        worker.instructions(">sw.js")
+        return fuse
     }
 });
 
 task("clean", () => src("dist").clean("dist").exec())
 
 task("default", ["clean"], async context => {
-    const fuse = context.getConfig();
-    fuse.dev();
-    context.createBundle(fuse);
-    await fuse.run();
+    const app = context.bundleApp();
+    const worker = context.bundleWorker();
+    await Promise.all([
+        app.dev(),
+        app.run(),
+        worker.run()
+    ])
 });
 
 task("dist", ["clean", "worker"], async context => {
     context.isProduction = true;
-    const fuse = context.getConfig();
-    context.createBundle(fuse);
-    await fuse.run();
+    const app = context.bundleApp();
+    const worker = context.bundleWorker()
+    await app.run();
+    await worker.run();
 });
-
-task("worker", ["clean"], async context => {
-    const fuse = context.bundleWorker()
-    await fuse.run()
-})
