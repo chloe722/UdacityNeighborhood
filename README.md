@@ -1,6 +1,6 @@
 # Neighborhood
 
-Neighborhood is an web app which you can search anything you are interested, for example, restaurant, cafe, bakery, bar and so on in your location. 
+Neighborhood is an web app which you can search anything you are interested in your location, for example, restaurant, cafe, bakery, bar and so on. 
 
 ## How to start Neighborhood?
 
